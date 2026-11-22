@@ -28,6 +28,21 @@
 .fluo-feedback-details { display: flex; flex-direction: column; gap: 9px; padding-top: 8px; border-top: 1px solid var(--border-2); font-size: 13px; line-height: 1.5; }
 .fluo-feedback-sample { background: var(--field); border: 1px solid var(--border-2); border-radius: 7px; padding: 8px 10px; color: var(--ink); font: 500 14px/1.45 'Spectral', serif; }
 .fluo-feedback-note { color: var(--muted); font-size: 12px; }
+.fluo-end-session {
+  width: 100%;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 12px 14px;
+  font: 600 13.5px 'IBM Plex Sans', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 3px 10px var(--accent-glow);
+  transition: transform 0.15s, filter 0.15s, box-shadow 0.15s;
+}
+.fluo-end-session:hover { filter: brightness(1.05); transform: translateY(-1px); box-shadow: 0 5px 14px var(--accent-glow); }
+.fluo-end-session:focus-visible { outline: 3px solid var(--accent-bg); outline-offset: 2px; }
+.fluo-end-session:active { transform: translateY(0); }
 
 @media (max-width: 760px) {
   .fluo-page { padding: 18px 16px 48px !important; }

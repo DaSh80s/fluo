@@ -1688,7 +1688,14 @@ Format:
                     </div>
                   )}
                   {conversation.length > 0 && (
-                    <div onClick={handleEndSession} style={{ textAlign: 'center', font: "500 13.5px 'IBM Plex Sans'", color: 'var(--muted)', border: '1px solid var(--border)', borderRadius: 7, padding: 11, cursor: 'pointer' }}>End session</div>
+                    <button
+                      type="button"
+                      className="fluo-end-session"
+                      onClick={handleEndSession}
+                      title="Finish this session and see your score"
+                    >
+                      Finish &amp; see score
+                    </button>
                   )}
                 </div>
               </div>
