@@ -31,6 +31,8 @@ t('every item presents with no gaps', bad.length === 0, bad.slice(0, 5).map((i) 
 t('every instruction names the answer language', all.every((i) => /German|English/.test(eng.present(i).instruction)));
 t('extras are labelled, never bare brackets', !all.some((i) => (eng.present(i).extras || []).some((e) => !e.label || String(e.value).startsWith('['))));
 t('minimal pairs numbered 1 and 2', all.filter((i) => i.format === 'minimalPair').every((i) => /\*\*1 ·\*\*[\s\S]*\*\*2 ·\*\*/.test(eng.present(i).stimulus)));
+t('minimal pair questions name the comparison and use', all.filter((i) => i.format === 'minimalPair').every((i) => /tone|turn|use version 2/i.test(eng.present(i).instruction)));
+t('repair comparison explains what to notice', all.some((i) => i.categoryId === 'repair' && i.format === 'minimalPair' && (eng.present(i).extras || []).some((e) => e.label === 'What to notice' && /buys time/i.test(e.value))));
 t('react instruction matches the expected length', all.filter((i) => i.format === 'react').every((i) => {
   const words = i.target.trim().split(/\s+/).length;
   const ins = eng.present(i).instruction;

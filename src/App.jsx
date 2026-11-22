@@ -260,6 +260,7 @@ export default function LanguagePracticeApp() {
   const [natItemShownAt, setNatItemShownAt] = useState(null);
   const [natHintLevel, setNatHintLevel] = useState(0);
   const [natElapsed, setNatElapsed] = useState(0);
+  const [expandedNatFeedback, setExpandedNatFeedback] = useState({});
   // The ride-along pass: on by default, but it costs a call per turn, so it is
   // switchable and the choice is remembered.
   const [natDetect, setNatDetect] = useState(() => {
@@ -1012,7 +1013,8 @@ Use emojis. Keep it snappy and encouraging. ONE noun per message.`,
       if (item.format === 'soften' && item.prompt?.blunt && (item.prompt?.goal || item.english)) {
         body += `\n\n🚫 The clipped version to avoid: *${item.prompt.blunt}*`;
       }
-      if (!j.landed) body += natTeachBlock(item, j);
+      const teaching = !j.landed ? natTeachBlock(item, j) : '';
+      if (teaching) body += teaching;
       if (item.confidence === 'review') {
         body += `\n\n⚠️ This one is genuinely contested among native speakers — worth checking against what you actually hear in Zurich.`;
       }
@@ -1023,7 +1025,16 @@ Use emojis. Keep it snappy and encouraging. ONE noun per message.`,
 
       setNatHintLevel(0);
       // The natural German is the thing worth hearing in the feedback.
-      setConversation(natAdvance(progress, [...withAnswer, { role: 'assistant', content: body, speak: j.naturalText || null }]));
+      const feedback = {
+        verdict: j.landed ? 'Natural and on target' : missedOpening ? 'Good German, missed opportunity' : 'Needs a small adjustment',
+        naturalText: j.naturalText,
+        explanation: j.explanation,
+        teaching,
+        note: item.note || '',
+        contested: item.confidence === 'review',
+        timing: item.timeLimitSec ? `${Math.round(elapsedSec)}s of ${item.timeLimitSec}s${elapsedSec > item.timeLimitSec ? ' — over the limit' : ''}` : '',
+      };
+      setConversation(natAdvance(progress, [...withAnswer, { role: 'assistant', content: body, speak: j.naturalText || null, natFeedback: feedback }]));
     } catch (error) {
       console.error('Naturalness judge error:', error);
       setConversation([...withAnswer, { role: 'assistant', content: `Could not judge that answer — ${error.message}` }]);
@@ -1502,7 +1513,7 @@ Format:
           <div className="fluo-header" style={{ background: 'var(--panel)', border: '1px solid var(--border)', borderRadius: 14, boxShadow: '0 1px 3px var(--shadow)', padding: '24px 30px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <div style={{ width: 46, height: 46, borderRadius: '50%', background: 'var(--accent)', color: 'var(--accent-ink)', fontFamily: "'Spectral',serif", fontWeight: 600, fontStyle: 'italic', fontSize: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 5px 18px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.28)', letterSpacing: '-0.02em' }}>F</div>
-              <div>
+                            <div>
                 <div style={{ fontFamily: "'Spectral',serif", fontWeight: 600, fontSize: 23, letterSpacing: '-0.01em', color: 'var(--ink)' }}>Fluo</div>
                 <div style={{ font: "400 13px 'IBM Plex Sans'", color: 'var(--muted)', marginTop: 2 }}>AI-powered learning · {selectedLanguage} {proficiencyLevel} {modeName}</div>
               </div>
@@ -1704,7 +1715,7 @@ Format:
                 )}
 
                 {/* chat (chronological: oldest → newest, scrolls to bottom) */}
-                <div style={{ flex: 1, padding: '22px 26px', display: 'flex', flexDirection: 'column', gap: 16, overflowY: 'auto', maxHeight: 'calc(100vh - 300px)', minHeight: 340 }}>
+                <div className="fluo-chat" style={{ flex: 1, padding: '18px 26px', display: 'flex', flexDirection: 'column', gap: 14, overflowY: 'auto', maxHeight: 'calc(100vh - 300px)', minHeight: 340 }}>
                   {conversation.length === 0 && !isLoading ? (
                     <div style={{ margin: 'auto', textAlign: 'center', maxWidth: 360 }}>
                       {practiceMode === 'biz:mine' && natItems.length === 0 ? (
@@ -1735,8 +1746,33 @@ Format:
                                   borderRadius: '4px 14px 14px 14px', padding: '14px 17px', fontSize: 14.5,
                                   lineHeight: 1.6, color: msg.polish ? 'var(--green-ink)' : 'var(--soft)',
                                 }}
-                                dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
-                              />
+                              >
+                                {msg.natFeedback ? (
+                                  <div className="fluo-naturalness-feedback">
+                                    <div className="fluo-feedback-verdict">{msg.natFeedback.verdict}</div>
+                                    {msg.natFeedback.naturalText && <div className="fluo-feedback-answer">{msg.natFeedback.naturalText}</div>}
+                                    {msg.natFeedback.explanation && (
+                                      <button
+                                        className="fluo-feedback-more"
+                                        onClick={() => setExpandedNatFeedback((prev) => ({ ...prev, [idx]: !prev[idx] }))}
+                                      >
+                                        {expandedNatFeedback[idx] ? 'Hide explanation' : 'More explanation'}
+                                      </button>
+                                    )}
+                                    {expandedNatFeedback[idx] && (
+                                      <div className="fluo-feedback-details">
+                                        {msg.natFeedback.explanation && <div>{msg.natFeedback.explanation}</div>}
+                                        {msg.natFeedback.note && <div className="fluo-feedback-note">💡 {msg.natFeedback.note}</div>}
+                                        {msg.natFeedback.teaching && <div dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.natFeedback.teaching) }} />}
+                                        {msg.natFeedback.contested && <div className="fluo-feedback-note">⚠️ This point is contested among native speakers; compare it with what you hear in Zurich.</div>}
+                                        {msg.natFeedback.timing && <div className="fluo-feedback-note">⏱ {msg.natFeedback.timing}</div>}
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <div dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }} />
+                                )}
+                              </div>
                               {voiceOn && (!isNat || msg.speak) && (
                                 <button
                                   onClick={() => voice.speak(msg.speak || msg.content, selectedLanguage)}

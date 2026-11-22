@@ -89,7 +89,11 @@ const ITEMS = [
     target: 'Da muss ich kurz korrigieren.', note: 'Announces the correction before making it, which keeps it collegial.' }),
 
   { id: id(), particle: 'repair', format: 'minimalPair', register: 'neutral', professionalSafe: true,
-    prompt: { without: 'Wir brauchen… (Stille) …äh… (Stille)', with: 'Wir brauchen… also, wie soll ich sagen… mehr Spielraum.' },
+    prompt: {
+      without: 'Wir brauchen… (Stille) …äh… (Stille)',
+      with: 'Wir brauchen… also, wie soll ich sagen… mehr Spielraum.',
+      focus: 'Version 1 leaves the speaker stranded in silence. Version 2 openly buys time and signals that the speaker is searching for the right wording while keeping the turn.'
+    },
     target: 'Both speakers are equally stuck. The second keeps the floor and sounds like someone thinking; the first sounds like someone who has run out of German.',
     note: 'The difference is not vocabulary. It is whether the hesitation is filled out loud.' },
 ];

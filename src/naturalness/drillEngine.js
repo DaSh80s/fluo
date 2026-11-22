@@ -78,12 +78,12 @@ export function present(item) {
       };
     case 'minimalPair':
       return {
-        instruction: 'What changes between version 1 and version 2? Answer in English — a sentence is plenty.',
+        instruction: 'Compare the two versions in English. Say what the added wording does to the speaker\'s tone or turn, and when you would use version 2.',
         // Numbered, because several of these pairs are dialogues whose own "A:"
         // and "B:" speaker labels otherwise read as the labels for the two
         // versions, leaving no way to tell which line is which.
         stimulus: `**1 ·** ${p.without}\n\n**2 ·** ${p.with}`,
-        extras: [],
+        extras: p.focus ? [{ label: 'What to notice', value: p.focus }] : [],
         inputHint: 'What changes',
       };
     case 'reverseGloss':
@@ -226,9 +226,10 @@ You are given a drill item, what the item was probing, and the learner's answer.
 
 Rules:
 - Judge naturalness, not grammar. Do not mark down a perfectly natural answer for a comma.
+- If the answer is good, idiomatic German but does not take the opportunity the item deliberately created, treat it as a "missed opportunity": reached is false and landed is false. Do not call it wrong German and do not invent a correction.
 - If the answer uses the target feature naturally, that is a POSITIVE result. Say so. Positive results matter as much as negative ones and are the main thing that keeps a learner going.
 - A different but equally natural answer than the expected one is still correct. Germans have more than one way to say most things.
-- Be specific and short. One or two sentences of explanation, in English.
+- Be specific and short. The UI shows a one-line verdict first, so explanation must be one clear sentence, in English. Explain the exact social effect or context the target adds; never say only "this sounds more natural".
 - Write to the learner directly, in the second person ("you"). Never refer to "the learner".
 - Never invent a fault to seem useful.
 

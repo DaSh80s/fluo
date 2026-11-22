@@ -9,6 +9,25 @@
 
 /* Practice screen: two columns on desktop/tablet, stacked on phones */
 .fluo-practice { display: flex; }
+
+/* The practice surface owns the viewport on laptops. The chat is the only
+   scrolling region, so a long answer or feedback card cannot push the composer
+   below the fold. */
+@media (min-width: 761px) {
+  .fluo-practice { height: min(720px, calc(100vh - 250px)); min-height: 480px !important; }
+  .fluo-session { min-height: 0; }
+  .fluo-chat { min-height: 0 !important; max-height: none !important; }
+  .fluo-answerbar { flex: 0 0 auto; padding-top: 12px !important; padding-bottom: 14px !important; }
+  .fluo-rail { overflow-y: auto; }
+}
+
+.fluo-naturalness-feedback { display: flex; flex-direction: column; gap: 9px; }
+.fluo-feedback-verdict { font: 600 13px/1.25 'IBM Plex Sans', sans-serif; color: var(--ink); }
+.fluo-feedback-answer { font: 500 16px/1.35 'Spectral', serif; color: var(--ink); }
+.fluo-feedback-more { align-self: flex-start; border: 1px solid var(--border); border-radius: 6px; background: var(--field); color: var(--accent); padding: 6px 9px; font: 600 11.5px 'IBM Plex Sans', sans-serif; cursor: pointer; }
+.fluo-feedback-details { display: flex; flex-direction: column; gap: 9px; padding-top: 8px; border-top: 1px solid var(--border-2); font-size: 13px; line-height: 1.5; }
+.fluo-feedback-note { color: var(--muted); font-size: 12px; }
+
 @media (max-width: 760px) {
   .fluo-page { padding: 18px 16px 48px !important; }
   .fluo-practice { flex-direction: column; }
@@ -22,6 +41,8 @@
   .fluo-answerrow { gap: 8px !important; }
   .fluo-answerrow button { padding-left: 16px !important; padding-right: 16px !important; }
   .fluo-mic { width: 44px !important; }
+  .fluo-practice { min-height: calc(100vh - 180px) !important; }
+  .fluo-chat { max-height: none !important; min-height: 0 !important; }
 }
 
 /* Hover affordances kept light so they read in both themes */
