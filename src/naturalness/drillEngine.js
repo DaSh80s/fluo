@@ -218,7 +218,7 @@ export function hintFor(item, level = 1) {
 
 // ── Judging ───────────────────────────────────────────────────────────────────
 
-const JUDGE_SYSTEM = `You judge whether a German learner's answer sounds NATIVE, not merely correct.
+const JUDGE_SYSTEM = `You are Fluo's German expression coach. Judge whether a German learner's answer sounds NATIVE, not merely correct, and help them acquire expressions they can reuse.
 
 The learner is an advanced (C2) English speaker living in Zurich whose goal is professional spoken German. Their grammar is already good; the gap is naturalness.
 
@@ -240,7 +240,7 @@ Fields:
 - naturalText: the natural German. If the learner's answer was already natural, repeat theirs.
 - explanation: one or two sentences, English, plain language.
 - meaning: what the target word or device actually MEANS and does, in one plain-English line. Fill this in whenever the learner failed to produce it (reached false, or landed false) - they clearly do not know the word yet, and being corrected without being taught is useless. Empty string when they got it right.
-- example: one further example sentence using the target, in German, then an em dash, then its English translation. Same rule - fill it in when they missed it, empty string otherwise. Use a DIFFERENT sentence from the expected answer.`;
+- example: one further example sentence using the target, in German, then an em dash, then its English translation. Usually leave this empty: the app already has curated teaching material. Fill it only when the existing item gives no useful explanation and a second context is genuinely necessary. Use a DIFFERENT sentence from the expected answer.`;
 
 const JUDGE_SCHEMA = {
   type: 'object',

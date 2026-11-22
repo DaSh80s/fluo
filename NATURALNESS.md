@@ -1,12 +1,29 @@
 # Naturalness Layer — build plan
 
-Status: **complete** (2026-09-12). All seven categories built (245 items), the ride-along
-detector runs in the ordinary practice modes, and voice is in. Step 5 — *use it, then tune* —
-is the only remaining item, and that one is Daniel's rather than mine.
+Status: **expression-learning refocus** (2026-11-22). The seven categories are built (245 items),
+the ride-along detector runs in the ordinary practice modes, and voice is in. The learner-facing
+goal is now explicit: acquire useful idiomatic expressions, practise producing them in context,
+and retrieve them again over time. Scoring remains background evidence, not the lesson.
 
-A second pillar alongside the grammar drilling, targeting what separates *correct* German
-from *native-sounding* German. This plan is a revision of the original spec, narrowed after
-working out how Fluo is actually used.
+A second pillar alongside the grammar drilling, targeting the expressions and conversational
+habits that separate *correct* German from *native-sounding* German. The primary product loop is
+expression acquisition: introduce the use, prompt production, give a concise correction, and
+bring the expression back for retrieval. This plan is a revision of the original spec, narrowed
+after working out how Fluo is actually used.
+
+## Learner-facing loop
+
+Each drill should answer four questions:
+
+1. What useful expression or conversational device am I learning?
+2. What situation calls for it, and what does it do socially?
+3. Can I produce it in a new situation?
+4. Do I need another example now, or is the explanation already enough?
+
+Feedback therefore leads with the expression's use and stays short. A second example is shown
+only when the curated explanation is insufficient or the judge identifies a genuinely necessary
+second context. The existing reach and hit-rate measures are retained as background signals for
+what to bring back, not as the learner's main objective.
 
 ---
 

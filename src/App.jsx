@@ -716,7 +716,10 @@ Use emojis. Keep it snappy and encouraging. ONE noun per message.`,
     // feature. Without that, categories tagging every item with a generic name
     // ('collocation') would match an unrelated item and present it as "another
     // example" of the thing just missed.
-    const eg = ref ? nat.exampleFor(natModule, item.categoryId, item.particle, item.id) : null;
+    // A second example is deliberately rare. Curated reference material already
+    // explains the expression; only an item without a curated gloss needs the
+    // judge's extra example to make the point concrete.
+    const eg = !ref ? nat.exampleFor(natModule, item.categoryId, item.particle, item.id) : null;
     const lines = [];
 
     if (ref) {
@@ -726,10 +729,10 @@ Use emojis. Keep it snappy and encouraging. ONE noun per message.`,
       const sense = String(ref.sense || '')
         .replace(new RegExp(`^['"‘’“”]?${esc}['"‘’“”]?\\s*(means|is|=|:)?\\s*`, 'i'), '')
         .replace(/^./, (c) => c.toUpperCase());
-      lines.push(`📖 **${ref.particle}** — ${sense || ref.sense}`);
+      lines.push(`📖 **Useful expression** — ${sense || ref.sense}`);
       if (ref.note) lines.push(ref.note);
     } else if (judged?.meaning) {
-      lines.push(`📖 **${item.particle}** — ${judged.meaning}`);
+      lines.push(`📖 **Useful expression** — ${judged.meaning}`);
     }
 
     if (eg) {
