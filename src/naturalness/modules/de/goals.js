@@ -21,7 +21,11 @@ export default {
   'de-reg-01': { blunt: 'Schicken Sie mir das.', goal: 'Ask them to send you the document.', who: 'A client — a polite request, not an order.' },
   'de-reg-02': { blunt: 'Ich will das besprechen.', goal: 'Suggest that you talk it through.', who: 'A colleague — propose it, do not demand it.' },
   'de-reg-03': { blunt: 'Ich habe eine Frage.', goal: 'Say that you have a question.', who: 'In a meeting — deferentially.' },
-  'de-reg-04': { blunt: 'Geht das?', goal: 'Ask whether that would be possible.', who: 'A client.' },
+  'de-reg-04': {
+    blunt: 'Geht das?',
+    goal: 'Ask whether moving the delivery date forward to Thursday would be possible.',
+    who: 'A client who has asked for an earlier delivery — formal, helpful, and without promising that you can do it.'
+  },
   'de-reg-05': { blunt: 'Ich sage, wir warten.', goal: 'Give your view that you should wait.', who: 'In a meeting — as an opinion, not a ruling.' },
   'de-reg-06': { blunt: 'Darf ich Sie unterbrechen?', goal: 'Ask whether you may interrupt for a moment.', who: 'A senior person — as deferentially as possible.' },
   'de-reg-07': { blunt: 'Können Sie das bis Freitag machen?', goal: 'Ask whether they could get it done by Friday.', who: 'A colleague — a request, not a test of whether they are able to.' },
@@ -34,12 +38,12 @@ export default {
   'de-reg-14': { blunt: 'Ich bin dagegen.', goal: 'Say that you are against it.', who: 'A colleague — leave room to be persuaded.' },
   'de-reg-15': { blunt: 'Das dauert drei Wochen.', goal: 'Estimate that it will take about three weeks.', who: 'A client — you cannot fully promise the number.' },
   'de-reg-16': { blunt: 'Das ist zu teuer.', goal: 'Say that it is too expensive.', who: 'A supplier — push back without sounding final.' },
-  'de-reg-23': { blunt: 'Schick mir das mal.', goal: 'Ask them to send it over to you.', who: 'A client — formal.' },
+  'de-reg-23': { blunt: 'Schick mir das mal.', goal: 'Ask the client to send the document over to you.', who: 'A client — formal, and make it a polite request rather than a command.' },
   'de-reg-24': { blunt: 'Ich kann nicht.', goal: 'Decline — you cannot make it.', who: 'A colleague who invited you — casual.' },
   'de-reg-25': { blunt: 'Ich kann nicht.', goal: 'Turn down their request — it cannot be done.', who: 'A client — formal, without making it personal.' },
-  'de-reg-26': { blunt: 'Nein.', goal: 'Reject the proposal.', who: 'In a meeting — without shutting the discussion down.' },
+  'de-reg-26': { blunt: 'Nein.', goal: 'Reject the proposal while leaving room to discuss a different approach.', who: 'In a meeting — you chair the discussion and do not want to shut it down.' },
   // ── phone calls ─────────────────────────────────────────────────────────
-  'de-calls-12': { blunt: 'Wer ist da?', goal: 'Ask who is calling.', who: 'An unknown caller on your work line — politely.' },
+  'de-calls-12': { blunt: 'Wer ist da?', goal: 'Ask who is calling before you continue the conversation.', who: 'An unknown caller on your work line — polite and professional.' },
   'de-calls-13': { blunt: 'Was?', goal: 'Say that you did not catch what they said.', who: 'A client, on the phone.' },
   'de-calls-14': { blunt: 'Ich rufe Sie an.', goal: 'Promise to get back to them by Thursday at the latest.', who: 'A client, on the phone.' },
   // ── meetings ────────────────────────────────────────────────────────────
@@ -60,6 +64,6 @@ export default {
   // ── email ───────────────────────────────────────────────────────────────
   'de-mail-10': { blunt: 'Schicken Sie mir Ihren Lebenslauf.', goal: 'Ask them to send you their CV.', who: 'A candidate, by email — friendly and formal.' },
   'de-mail-11': { blunt: 'Sie haben nicht geantwortet.', goal: 'Follow up on the message you sent on Monday, which has had no reply.', who: 'A client, by email — no hint of reproach.' },
-  'de-mail-12': { blunt: 'Ok, danke.', goal: 'Thank them for getting back to you.', who: 'A client, by email.' },
-  'de-mail-13': { blunt: 'Wann haben Sie Zeit?', goal: 'Propose a meeting on Tuesday at 2 pm or Wednesday at 10 am.', who: 'A client, by email.' },
+  'de-mail-12': { blunt: 'Ok, danke.', goal: 'Thank them warmly for replying to the email you sent.', who: 'A client, by email — warm and professional, not just “OK, thanks”.' },
+  'de-mail-13': { blunt: 'Wann haben Sie Zeit?', goal: 'Propose a meeting on Tuesday at 2 pm or Wednesday at 10 am.', who: 'A client, by email — offer both times clearly and politely.' },
 };
