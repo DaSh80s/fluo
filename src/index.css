@@ -26,6 +26,7 @@
 .fluo-feedback-answer { font: 500 16px/1.35 'Spectral', serif; color: var(--ink); }
 .fluo-feedback-more { align-self: flex-start; border: 1px solid var(--border); border-radius: 6px; background: var(--field); color: var(--accent); padding: 6px 9px; font: 600 11.5px 'IBM Plex Sans', sans-serif; cursor: pointer; }
 .fluo-feedback-details { display: flex; flex-direction: column; gap: 9px; padding-top: 8px; border-top: 1px solid var(--border-2); font-size: 13px; line-height: 1.5; }
+.fluo-feedback-sample { background: var(--field); border: 1px solid var(--border-2); border-radius: 7px; padding: 8px 10px; color: var(--ink); font: 500 14px/1.45 'Spectral', serif; }
 .fluo-feedback-note { color: var(--muted); font-size: 12px; }
 
 @media (max-width: 760px) {

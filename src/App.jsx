@@ -712,14 +712,6 @@ Use emojis. Keep it snappy and encouraging. ONE noun per message.`,
    */
   const natTeachBlock = (item, judged) => {
     const ref = nat.referenceFor(natModule, item.categoryId, item.particle);
-    // Only trust a curated example when a curated GLOSS exists for the same
-    // feature. Without that, categories tagging every item with a generic name
-    // ('collocation') would match an unrelated item and present it as "another
-    // example" of the thing just missed.
-    // A second example is deliberately rare. Curated reference material already
-    // explains the expression; only an item without a curated gloss needs the
-    // judge's extra example to make the point concrete.
-    const eg = !ref ? nat.exampleFor(natModule, item.categoryId, item.particle, item.id) : null;
     const lines = [];
 
     if (ref) {
@@ -735,15 +727,19 @@ Use emojis. Keep it snappy and encouraging. ONE noun per message.`,
       lines.push(`📖 **Useful expression** — ${judged.meaning}`);
     }
 
-    if (eg) {
-      lines.push(`Another example: **${eg.german}** — "${eg.english}"`);
-    } else if (judged?.example) {
-      lines.push(`Another example: ${judged.example}`);
-    } else if (ref?.pair?.with) {
-      lines.push(`Another example: **${ref.pair.with}**`);
-    }
-
     return lines.length ? `\n\n${lines.join('\n')}` : '';
+  };
+
+  // Use the authored drill itself as the sample sentence. This keeps the
+  // example tied to the expression being learned and avoids a model-generated
+  // example accidentally borrowing an unrelated phrase from the category.
+  const natSampleSentence = (item) => {
+    const p = item.prompt || {};
+    if (['trapTranslation', 'insert', 'soften'].includes(item.format)) return item.target || '';
+    if (item.format === 'which' && p.sentence) return p.sentence.replace(/_{2,}/, item.target || '___');
+    if (item.format === 'reverseGloss') return p.sentence || '';
+    if (item.format === 'minimalPair') return p.with || '';
+    return '';
   };
 
   // ── Feedback importer ──────────────────────────────────────────────────────
@@ -1031,6 +1027,7 @@ Use emojis. Keep it snappy and encouraging. ONE noun per message.`,
       const feedback = {
         verdict: j.landed ? 'Natural and on target' : missedOpening ? 'Good German, missed opportunity' : 'Needs a small adjustment',
         naturalText: j.naturalText,
+        sample: !j.landed ? natSampleSentence(item) : '',
         explanation: j.explanation,
         teaching,
         note: item.note || '',
@@ -1765,6 +1762,9 @@ Format:
                                     {expandedNatFeedback[idx] && (
                                       <div className="fluo-feedback-details">
                                         {msg.natFeedback.explanation && <div>{msg.natFeedback.explanation}</div>}
+                                        {msg.natFeedback.sample && (
+                                          <div className="fluo-feedback-sample"><strong>Sample sentence:</strong><br />{msg.natFeedback.sample}</div>
+                                        )}
                                         {msg.natFeedback.note && <div className="fluo-feedback-note">💡 {msg.natFeedback.note}</div>}
                                         {msg.natFeedback.teaching && <div dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.natFeedback.teaching) }} />}
                                         {msg.natFeedback.contested && <div className="fluo-feedback-note">⚠️ This point is contested among native speakers; compare it with what you hear in Zurich.</div>}
